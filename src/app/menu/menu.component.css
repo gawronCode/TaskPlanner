@@ -1,0 +1,18 @@
+#logo{
+    margin-right: 10px;
+    pointer-events: none;
+}
+
+span{
+    flex: 1 1 auto;
+}
+
+
+mat-icon{
+    margin-right: 1px;
+}
+
+
+
+
+  

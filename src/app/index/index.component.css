@@ -1,0 +1,11 @@
+h1{
+    line-height: 45px;
+    font-size: 40px;
+}
+
+
+.vCenterDiv{
+    text-align: center;
+    margin: auto;
+    margin-top: 40vh;
+}

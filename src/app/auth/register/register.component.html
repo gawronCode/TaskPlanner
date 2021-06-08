@@ -1,0 +1,37 @@
+<div class="vCenterDiv">
+    <div class="credentials">
+        <h1>Utwórz nowe konto</h1>
+
+        <form>
+            <div class="inputDiv">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nick</mat-label>
+                    <input matInput />
+                </mat-form-field>
+            </div>
+            <div class="inputDiv">
+                <mat-form-field appearance="outline">
+                    <mat-label>Adres email</mat-label>
+                    <input type="email" matInput />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Hasło</mat-label>
+                    <input type="password" matInput />
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Powtórz hasło</mat-label>
+                    <input type="password" matInput />
+                </mat-form-field>
+            </div>
+        </form>
+
+        <button mat-button>Zaloguj</button>
+
+        <p>Posiadasz już konto? klikniuj <a routerLink="/auth/login">tutaj</a> aby się zalogować</p>
+
+    </div>
+</div>
