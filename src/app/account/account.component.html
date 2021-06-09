@@ -1,0 +1,59 @@
+<div class="vCenterDiv">
+    <div class="credentials">
+        <div class="info">
+            <h1>Szczegóły konta</h1>
+        </div>
+
+        <div class="loadDiv" *ngIf="!userName && !email">
+            <mat-spinner></mat-spinner>
+        </div>
+
+        <div *ngIf="userName && email" class="content">
+            <div *ngIf="!nameEdit">
+                <h2>Nick: {{userName}} <button class="editBtn" mat-icon-button (click)="toogleNameEdit()"><mat-icon>edit</mat-icon></button></h2>
+            </div>
+            <div *ngIf="nameEdit">
+                <form [formGroup]="formName">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nick</mat-label>
+                        <input formControlName='name' matInput />
+                        <!-- <mat-error *ngIf="form.invalid">{{getErrorFieldEmail()}}</mat-error> -->
+                    </mat-form-field>
+                    <button type="button" class="editBtnAction" id="cancel" mat-icon-button (click)="toogleNameEdit()"><mat-icon >cancel</mat-icon></button>
+                    <button type="submit" class="editBtnAction" id="save" mat-icon-button (click)="saveNameChange()"><mat-icon >save</mat-icon></button>
+                </form>
+            </div>
+            <hr>
+            <div *ngIf="!emailEdit">
+                <h2>Email: {{email}} <button class="editBtn" mat-icon-button (click)="toogleEmailEdit()"><mat-icon>edit</mat-icon></button></h2>
+            </div>
+            <div *ngIf="emailEdit">
+                <form [formGroup]="formEmail">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Adres email</mat-label>
+                        <input formControlName='email' type="email" matInput />
+                        <!-- <mat-error *ngIf="form.invalid">{{getErrorFieldEmail()}}</mat-error> -->
+                    </mat-form-field>
+                    <button class="editBtnAction" id="cancel" mat-icon-button (click)="toogleEmailEdit()"><mat-icon >cancel</mat-icon></button>
+                    <button class="editBtnAction" id="save" mat-icon-button (click)="toogleEmailEdit()"><mat-icon >save</mat-icon></button>
+                </form>
+            </div>
+            <hr>
+            <div *ngIf="!passwordEdit">
+                <h2>Hasło: ****** <button class="editBtn" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon>edit</mat-icon></button></h2>
+            </div>
+            <div *ngIf="passwordEdit">
+                <form [formGroup]="formPassword">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nowe hasło</mat-label>
+                        <input formControlName='password' type="password" matInput />
+                        <!-- <mat-error *ngIf="form.invalid">{{getErrorFieldEmail()}}</mat-error> -->
+                    </mat-form-field>
+                    <button class="editBtnAction" id="cancel" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon >cancel</mat-icon></button>
+                    <button class="editBtnAction" id="save" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon >save</mat-icon></button>
+                </form>
+            </div>
+            <button mat-button class="deleteBtn">Usuń konto</button>
+        </div>
+    </div>
+</div>

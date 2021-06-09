@@ -13,6 +13,8 @@ import { HomeComponent } from './home/home.component';
 
 import {FormsModule} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
+import { AccountComponent } from './account/account.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -22,6 +24,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     RegisterComponent,
     LoginComponent,
     HomeComponent,
+    AccountComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

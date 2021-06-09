@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import {RegisterComponent} from './auth/register/register.component';
 import {LoginComponent} from './auth/login/login.component';
 import {HomeComponent} from './home/home.component';
+import { AccountComponent } from './account/account.component';
 
 
 const routes: Routes = [
   // {path: '', redirectTo: 'user', pathMatch: 'full'},
   {path: 'auth/register', component:RegisterComponent},
   {path: 'auth/login', component:LoginComponent},
+  {path: 'account', component:AccountComponent},
   {path: '', component:HomeComponent},
   {path: '**', redirectTo:''}
 ];
