@@ -1,0 +1,9 @@
+<div class="vCenterDiv">
+    <div *ngIf="!(authService.currentUser$ | async)">
+        <h1>Aby wyświetlić zadania, zaloguj się do swojego konta</h1>
+    </div>
+    <div *ngIf="authService.currentUser$ | async">
+        <h1>Użytkownik zalogowany :)</h1>
+    </div>
+</div>
+

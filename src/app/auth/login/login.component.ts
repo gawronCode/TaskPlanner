@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { userDto } from 'src/app/_models/user';
 import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
@@ -26,6 +28,9 @@ export class LoginComponent implements OnInit {
         validators: [Validators.required]
       }]
     });
+
+    const user = JSON.parse(localStorage.getItem('user') as any)
+    if(user) this.router.navigate(['']);
   }
 
   login() {

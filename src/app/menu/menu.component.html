@@ -5,20 +5,25 @@
             <mat-icon>home</mat-icon>Strona głowna</a>
     </span>
     <span style="width: 100%;"></span>
-    <span *ngIf="!loggedIn">
+    <span *ngIf="!(authService.currentUser$ | async)">
         <a mat-button routerLink="auth/login">
             <mat-icon>login</mat-icon>Zaloguj</a>
     </span>
-    <span *ngIf="!loggedIn">
+    <span *ngIf="!(authService.currentUser$ | async)">
         <a mat-button routerLink="auth/register">
             <mat-icon>person_add</mat-icon>Rejestracja</a>
     </span>
-    <span *ngIf="loggedIn">
-        <a mat-button routerLink="">
+    <span *ngIf="authService.currentUser$ | async">
+        <a id="logo" mat-button routerLink="">
             <mat-icon>account_circle</mat-icon>Witaj {{userName}}!</a>
     </span>
-    <span *ngIf="loggedIn">
+    <span *ngIf="authService.currentUser$ | async">
         <a mat-button routerLink="" (click)="logout()">
             <mat-icon>logout</mat-icon>Wyloguj</a>
+    </span>
+    <span>
+        <a mat-icon-button (click)="get()">
+            GET
+        </a>
     </span>
 </mat-toolbar>

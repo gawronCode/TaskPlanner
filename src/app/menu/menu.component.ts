@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { userDto } from '../_models/user';
 import { AuthService } from '../_services/auth.service';
 
 @Component({
@@ -8,28 +10,31 @@ import { AuthService } from '../_services/auth.service';
 })
 export class MenuComponent implements OnInit {
 
+  user: userDto = JSON.parse(localStorage.getItem('user') as any);
+
   loggedIn: boolean = false;
   userName: string = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
-    this.getCurrentUser();
+    // const user = JSON.parse(localStorage.getItem('user') as any)
+    this.authService.currentUser$.subscribe(user =>
+      {
+        if (user) this.userName = user.user
+      })
+    
+    // if(user) this.userName = user.user;
   }
 
   logout(){
     this.authService.logout();
   }
 
-  getCurrentUser(){
-    this.authService.currentUser$.subscribe(user => {
-      this.loggedIn = !!user;
-      if(user){
-        this.userName = user.user;
-      }
+  get(){
+    this.authService.get().subscribe(data =>{
+      console.log(data)
     })
-    console.log(this.loggedIn);
   }
-  
-
+ 
 }

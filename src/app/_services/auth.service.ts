@@ -1,25 +1,26 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import {map} from 'rxjs/operators'
 import { userDto } from '../_models/user';
-import { ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  loggedIn: boolean = false;
   private currentUserSource = new ReplaySubject<userDto>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
-  LoginURL = 'authentication/authenticate'
+  LoginURL = 'authentication/authenticate';
+  RegisterURL = 'authentication/RegisterUser';
+  GetURL = 'authentication/Get';
 
   login(model: any){
-    this.loggedIn = true;
     return this.http.post<userDto>(environment.apiURL + this.LoginURL, model).pipe(
       map((response: userDto) => {
         const user = response;
@@ -31,7 +32,13 @@ export class AuthService {
     )
   }
 
-
+  get(): Observable<any> {
+    const token: any = JSON.parse(localStorage.getItem('user') as any)?.token;
+    const header: HttpHeaders = new HttpHeaders().set("Authorization", "Bearer "+token)
+    return this.http.get(environment.apiURL + this.GetURL, {
+      headers: header
+    });
+  }
 
   setCurrentUser(user: userDto){
     this.currentUserSource.next(user);
@@ -40,6 +47,10 @@ export class AuthService {
   logout(){
     localStorage.removeItem('user');
     this.currentUserSource.next(null as any);
+  }
+
+  register(model: any){
+    return this.http.post(environment.apiURL + this.RegisterURL, model);
   }
 
 }
