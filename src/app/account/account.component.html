@@ -12,12 +12,12 @@
             <div *ngIf="!nameEdit">
                 <h2>Nick: {{userName}} <button class="editBtn" mat-icon-button (click)="toogleNameEdit()"><mat-icon>edit</mat-icon></button></h2>
             </div>
-            <div *ngIf="nameEdit">
+            <div *ngIf="nameEdit" style="height: 70px">
                 <form [formGroup]="formName">
                     <mat-form-field appearance="outline">
                         <mat-label>Nick</mat-label>
                         <input formControlName='name' matInput />
-                        <!-- <mat-error *ngIf="form.invalid">{{getErrorFieldEmail()}}</mat-error> -->
+                        <mat-error *ngIf="formName.invalid">{{getErrorFieldName()}}</mat-error>
                     </mat-form-field>
                     <button type="button" class="editBtnAction" id="cancel" mat-icon-button (click)="toogleNameEdit()"><mat-icon >cancel</mat-icon></button>
                     <button type="submit" class="editBtnAction" id="save" mat-icon-button (click)="saveNameChange()"><mat-icon >save</mat-icon></button>
@@ -27,12 +27,12 @@
             <div *ngIf="!emailEdit">
                 <h2>Email: {{email}} <button class="editBtn" mat-icon-button (click)="toogleEmailEdit()"><mat-icon>edit</mat-icon></button></h2>
             </div>
-            <div *ngIf="emailEdit">
+            <div *ngIf="emailEdit" style="height: 70px">
                 <form [formGroup]="formEmail">
                     <mat-form-field appearance="outline">
                         <mat-label>Adres email</mat-label>
                         <input formControlName='email' type="email" matInput />
-                        <!-- <mat-error *ngIf="form.invalid">{{getErrorFieldEmail()}}</mat-error> -->
+                        <mat-error *ngIf="formEmail.invalid">{{getErrorFieldEmail()}}</mat-error>
                     </mat-form-field>
                     <button class="editBtnAction" id="cancel" mat-icon-button (click)="toogleEmailEdit()"><mat-icon >cancel</mat-icon></button>
                     <button class="editBtnAction" id="save" mat-icon-button (click)="saveEmailChange()"><mat-icon >save</mat-icon></button>
@@ -42,18 +42,25 @@
             <div *ngIf="!passwordEdit">
                 <h2>Hasło: ****** <button class="editBtn" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon>edit</mat-icon></button></h2>
             </div>
-            <div *ngIf="passwordEdit">
+            <div *ngIf="passwordEdit" style="height: 130px">
                 <form [formGroup]="formPassword">
-                    <mat-form-field appearance="outline">
+                    <mat-form-field style="padding: 0;" appearance="outline">
                         <mat-label>Nowe hasło</mat-label>
                         <input formControlName='password' type="password" matInput />
-                        <!-- <mat-error *ngIf="form.invalid">{{getErrorFieldEmail()}}</mat-error> -->
+                        <mat-error *ngIf="formPassword.invalid">lalala</mat-error>
                     </mat-form-field>
-                    <button class="editBtnAction" id="cancel" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon >cancel</mat-icon></button>
-                    <button class="editBtnAction" id="save" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon >save</mat-icon></button>
+                    <button style="top: 45px;" class="editBtnAction" id="cancel" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon >cancel</mat-icon></button>
+                    <button style="top: 45px;" class="editBtnAction" id="save" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon >save</mat-icon></button>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Powtórz hasło</mat-label>
+                        <input formControlName='repeatPassword' type="password" matInput />
+                        <mat-error *ngIf="formPassword.invalid">srututu</mat-error>
+                    </mat-form-field>
                 </form>
             </div>
-            <button mat-button class="deleteBtn">Usuń konto</button>
+            <div>
+                <button mat-button class="deleteBtn">Usuń konto</button>
+            </div>
         </div>
     </div>
 </div>

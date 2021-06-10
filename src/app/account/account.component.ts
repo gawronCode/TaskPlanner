@@ -36,7 +36,7 @@ export class AccountComponent implements OnInit {
 
     this.formName = this.formBuilder.group({
       name: [this.userName, {
-        validators: [Validators.required]
+        validators: [Validators.required, Validators.minLength(3)]
       }]
     });
 
@@ -48,11 +48,24 @@ export class AccountComponent implements OnInit {
   saveNameChange(){
 
     if(this.formName.value.name != this.userName){
+
       this.accountService.UpdateName(this.formName.value).subscribe(() => {
         this.ngOnInit();
       })
     }
     this.toogleNameEdit();
+  }
+
+  getErrorFieldName(): string{
+    const field = this.formName.get('name');
+
+    if(field?.hasError('required')){
+      return "Nick jest wymagany"
+    } else if (field?.hasError('minlength')){
+      return "Nick musi mieć przynajmniej 3 znaki"
+    }
+
+    return "";
   }
 
   toogleEmailEdit(){
@@ -78,19 +91,34 @@ export class AccountComponent implements OnInit {
     this.toogleEmailEdit();
   }
 
+
+  getErrorFieldEmail(): string{
+    const field = this.formEmail.get('email');
+
+    if(field?.hasError('required')){
+      return "Email jest wymagany"
+    } else if (field?.hasError('email')){
+      return "Podany email jest niepoprawny"
+    }
+
+    return "";
+  }
+
   tooglePasswordEdit(){
 
     this.formPassword = this.formBuilder.group({
       password: ["", {
         validators: [Validators.required, Validators.minLength(6)]
-      }]
+      }],
+      repeatPassword: ["", {
+        validators: [Validators.required, Validators.minLength(6)]
+      }],
     });
 
     this.passwordEdit = !this.passwordEdit;
     this.nameEdit = false;
     this.emailEdit= false;
   }
-
 
 
 }
