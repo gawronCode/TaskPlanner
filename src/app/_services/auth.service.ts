@@ -11,7 +11,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 })
 export class AuthService {
 
-  private currentUserSource = new ReplaySubject<userDto>(1);
+  public currentUserSource = new ReplaySubject<userDto>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { }

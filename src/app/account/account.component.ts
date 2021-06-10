@@ -48,7 +48,7 @@ export class AccountComponent implements OnInit {
   saveNameChange(){
 
     if(this.formName.value.name != this.userName){
-      this.accountService.UpdateCredentials(this.formName.value).subscribe(() => {
+      this.accountService.UpdateName(this.formName.value).subscribe(() => {
         this.ngOnInit();
       })
     }
@@ -66,6 +66,16 @@ export class AccountComponent implements OnInit {
     this.emailEdit = !this.emailEdit;
     this.nameEdit = false;
     this.passwordEdit = false;
+  }
+
+  saveEmailChange(){
+    if(this.formEmail.value.email != this.email){
+      this.accountService.UpdateEmail(this.formEmail.value).subscribe(data => {
+        console.log(data);
+        this.ngOnInit();
+      })
+    }
+    this.toogleEmailEdit();
   }
 
   tooglePasswordEdit(){
