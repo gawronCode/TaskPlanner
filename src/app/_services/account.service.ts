@@ -17,6 +17,7 @@ export class AccountService {
   GetURL = 'Account/Get';
   UpdateNameURL = 'Account/UpdateName';
   UpdateEmailURL = 'Account/UpdateEmail';
+  UpdatePasswordURL = 'Account/UpdatePassword';
   DeleteAccountURL = 'Account/DeleteAccount';
 
   get(): Observable<any> {
@@ -30,7 +31,7 @@ export class AccountService {
   UpdateName(name: any) {
     const token: any = JSON.parse(localStorage.getItem('user') as any)?.token;
     const header: HttpHeaders = new HttpHeaders().set("Authorization", "Bearer "+token)
-
+    this.authService.updateCurrentUserName(name.name);
     return this.http.put(environment.apiURL + this.UpdateNameURL, name ,{
       headers: header
     });
@@ -51,6 +52,16 @@ export class AccountService {
         }
       })
     );
+  }
+
+  UpdatePassword(password: any) {
+    const token: any = JSON.parse(localStorage.getItem('user') as any)?.token;
+    const header: HttpHeaders = new HttpHeaders().set("Authorization", "Bearer "+token)
+
+
+    return this.http.put(environment.apiURL + this.UpdatePasswordURL, password, {
+      headers: header
+    });
   }
 
   DeleteAccount(): Observable<any> {

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MenuComponent } from '../menu/menu.component';
+import { MustMatch } from '../_helpers/password-match.validator';
 import { AccountService } from '../_services/account.service';
 import { AuthService } from '../_services/auth.service';
 
@@ -50,6 +52,7 @@ export class AccountComponent implements OnInit {
     if(this.formName.value.name != this.userName){
 
       this.accountService.UpdateName(this.formName.value).subscribe(() => {
+
         this.ngOnInit();
       })
     }
@@ -91,7 +94,6 @@ export class AccountComponent implements OnInit {
     this.toogleEmailEdit();
   }
 
-
   getErrorFieldEmail(): string{
     const field = this.formEmail.get('email');
 
@@ -113,6 +115,8 @@ export class AccountComponent implements OnInit {
       repeatPassword: ["", {
         validators: [Validators.required, Validators.minLength(6)]
       }],
+    }, {
+      validator: MustMatch('password', 'repeatPassword')
     });
 
     this.passwordEdit = !this.passwordEdit;
@@ -120,5 +124,35 @@ export class AccountComponent implements OnInit {
     this.emailEdit= false;
   }
 
+  savePasswordChange(){
+    
+    this.accountService.UpdatePassword({password: this.formPassword.get('password').value}).subscribe(() => {
+      this.ngOnInit();
+    });
+    
+    this.tooglePasswordEdit();
+  }
+
+  getErrorFieldPassword(): string {
+    const field = this.formPassword.get('password');
+
+    if(field?.hasError('required')){
+      return "Hasło nie może być puste"
+    } else if (field?.hasError('minlength')){
+      return "Hasło musi zawierać przynajmniej 6 znaków"
+    }
+
+    return "";
+  }
+
+  getErrorFieldRepeatPassword(): string{
+    const field = this.formPassword.get('repeatPassword');
+
+    if (field?.hasError('required')){
+      return 'Pole nie może być puste'
+    }
+
+    return 'Hasło nie zgadza się z powtórzeniem'
+  }
 
 }

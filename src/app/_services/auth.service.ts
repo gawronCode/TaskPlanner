@@ -32,6 +32,7 @@ export class AuthService {
     )
   }
 
+  //do testów tylko
   get(): Observable<any> {
     const token: any = JSON.parse(localStorage.getItem('user') as any)?.token;
     const header: HttpHeaders = new HttpHeaders().set("Authorization", "Bearer "+token)
@@ -43,6 +44,14 @@ export class AuthService {
   setCurrentUser(user: userDto){
     this.currentUserSource.next(user);
   }
+
+  updateCurrentUserName(name: string){
+    const user = JSON.parse(localStorage.getItem('user') as any);
+    user.user = name;
+    localStorage.setItem('user', JSON.stringify(user));
+    this.currentUserSource.next(user);
+  }
+
 
   logout(){
     localStorage.removeItem('user');

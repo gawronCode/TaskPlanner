@@ -20,7 +20,7 @@
                         <mat-error *ngIf="formName.invalid">{{getErrorFieldName()}}</mat-error>
                     </mat-form-field>
                     <button type="button" class="editBtnAction" id="cancel" mat-icon-button (click)="toogleNameEdit()"><mat-icon >cancel</mat-icon></button>
-                    <button type="submit" class="editBtnAction" id="save" mat-icon-button (click)="saveNameChange()"><mat-icon >save</mat-icon></button>
+                    <button type="submit" [disabled]="formName.invalid" class="editBtnAction" id="save" mat-icon-button (click)="saveNameChange()"><mat-icon >save</mat-icon></button>
                 </form>
             </div>
             <hr>
@@ -35,7 +35,7 @@
                         <mat-error *ngIf="formEmail.invalid">{{getErrorFieldEmail()}}</mat-error>
                     </mat-form-field>
                     <button class="editBtnAction" id="cancel" mat-icon-button (click)="toogleEmailEdit()"><mat-icon >cancel</mat-icon></button>
-                    <button class="editBtnAction" id="save" mat-icon-button (click)="saveEmailChange()"><mat-icon >save</mat-icon></button>
+                    <button class="editBtnAction" [disabled]="formEmail.invalid" id="save" mat-icon-button (click)="saveEmailChange()"><mat-icon >save</mat-icon></button>
                 </form>
             </div>
             <hr>
@@ -47,14 +47,14 @@
                     <mat-form-field style="padding: 0;" appearance="outline">
                         <mat-label>Nowe hasło</mat-label>
                         <input formControlName='password' type="password" matInput />
-                        <mat-error *ngIf="formPassword.invalid">lalala</mat-error>
+                        <mat-error *ngIf="formPassword.invalid">{{getErrorFieldPassword()}}</mat-error>
                     </mat-form-field>
                     <button style="top: 45px;" class="editBtnAction" id="cancel" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon >cancel</mat-icon></button>
-                    <button style="top: 45px;" class="editBtnAction" id="save" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon >save</mat-icon></button>
+                    <button style="top: 45px;" [disabled]="formPassword.invalid" class="editBtnAction" id="save" mat-icon-button (click)="savePasswordChange()"><mat-icon >save</mat-icon></button>
                     <mat-form-field appearance="outline">
                         <mat-label>Powtórz hasło</mat-label>
                         <input formControlName='repeatPassword' type="password" matInput />
-                        <mat-error *ngIf="formPassword.invalid">srututu</mat-error>
+                        <mat-error *ngIf="formPassword.invalid">{{getErrorFieldRepeatPassword()}}</mat-error>
                     </mat-form-field>
                 </form>
             </div>
