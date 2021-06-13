@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import { AccountComponent } from './account/account.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { DeleteComponent } from './account/delete/delete.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     HomeComponent,
     AccountComponent,
     NavbarComponent,
+    DeleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,10 +40,10 @@ import { NavbarComponent } from './navbar/navbar.component';
     FormsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({
-      timeOut: 1500,
+      timeOut: 2500,
       positionClass: "toast-custom-top-center",
-      progressBar: true,
-      progressAnimation: "decreasing",
+      // progressBar: true,
+      // progressAnimation: "decreasing",
       preventDuplicates: true,
     }),
 

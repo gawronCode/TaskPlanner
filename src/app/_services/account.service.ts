@@ -64,10 +64,10 @@ export class AccountService {
     });
   }
 
-  DeleteAccount(): Observable<any> {
+  DeleteAccount(password: any): Observable<any> {
     const token: any = JSON.parse(localStorage.getItem('user') as any)?.token;
     const header: HttpHeaders = new HttpHeaders().set("Authorization", "Bearer "+token)
-    return this.http.get(environment.apiURL + this.GetURL, {
+    return this.http.post(environment.apiURL + this.DeleteAccountURL, password ,{
       headers: header
     });
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MenuComponent } from '../menu/menu.component';
 import { MustMatch } from '../_helpers/password-match.validator';
@@ -16,7 +17,8 @@ export class AccountComponent implements OnInit {
   constructor(private authService: AuthService,
               private toastr: ToastrService, 
               private accountService: AccountService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.accountService.get().subscribe(data=>{
@@ -166,6 +168,10 @@ export class AccountComponent implements OnInit {
     }
 
     return 'Hasło nie zgadza się z powtórzeniem'
+  }
+
+  delete(){
+    this.router.navigate(['account/delete']);
   }
 
 }

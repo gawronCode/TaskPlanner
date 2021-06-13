@@ -1,0 +1,17 @@
+<div class="vCenterDiv">
+    <div class="credentials">
+        <h3>Uwaga, usunięcie konta spowoduje utratę wszelkich powiązanych z nim informacji i jest nieodwracalne!</h3>
+
+        <form (submit)="delete()" [formGroup]='form'>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Hasło</mat-label>
+                    <input formControlName='password' type="password" matInput />
+                    <mat-error *ngIf="form.invalid">{{getErrorFieldPassword()}}</mat-error>
+                </mat-form-field>
+            </div>
+            <a type="button" class="primary" routerLink="/account" mat-button>Anuluj</a>
+            <button type="submit" [disabled]="form.invalid" mat-button>Tak, chcę usunąć konto</button>
+        </form>
+    </div>
+</div>
