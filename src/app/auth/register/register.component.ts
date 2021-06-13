@@ -87,8 +87,11 @@ export class RegisterComponent implements OnInit {
   register(){
     this.authService.register({name: this.form.value.name,
                               email: this.form.value.email,
-                              password: this.form.value.password}).subscribe(response => {
-                                console.log(response);
+                              password: this.form.value.password}).subscribe(() => {
+                                this.authService.login({email: this.form.value.email,
+                                                        password: this.form.value.password}).subscribe(() =>{
+                                                          this.router.navigate(['']);
+                                                        })
                               })
 
   }

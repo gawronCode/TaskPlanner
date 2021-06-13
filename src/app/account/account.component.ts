@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { MenuComponent } from '../menu/menu.component';
 import { MustMatch } from '../_helpers/password-match.validator';
 import { AccountService } from '../_services/account.service';
@@ -12,7 +13,8 @@ import { AuthService } from '../_services/auth.service';
 })
 export class AccountComponent implements OnInit {
 
-  constructor(private authService: AuthService, 
+  constructor(private authService: AuthService,
+              private toastr: ToastrService, 
               private accountService: AccountService,
               private formBuilder: FormBuilder) { }
 
@@ -54,8 +56,13 @@ export class AccountComponent implements OnInit {
       this.accountService.UpdateName(this.formName.value).subscribe(() => {
 
         this.ngOnInit();
+
       })
+      this.toastr.success("Nick został zmieniony")
+      this.toogleNameEdit();
+      return;
     }
+    this.toastr.info("Nie dokonano zmiany nicku")
     this.toogleNameEdit();
   }
 
@@ -86,11 +93,14 @@ export class AccountComponent implements OnInit {
 
   saveEmailChange(){
     if(this.formEmail.value.email != this.email){
-      this.accountService.UpdateEmail(this.formEmail.value).subscribe(data => {
-        console.log(data);
+      this.accountService.UpdateEmail(this.formEmail.value).subscribe(() => {
         this.ngOnInit();
       })
+      this.toastr.success("Adres email został zmieniony");
+      this.toogleEmailEdit();
+      return;
     }
+    this.toastr.info("Nie dokonano zmiany adresu email");
     this.toogleEmailEdit();
   }
 
@@ -127,9 +137,12 @@ export class AccountComponent implements OnInit {
   savePasswordChange(){
     
     this.accountService.UpdatePassword({password: this.formPassword.get('password').value}).subscribe(() => {
+      this.toastr.success("Hasło zostało zmienione");
       this.ngOnInit();
     });
     
+    
+
     this.tooglePasswordEdit();
   }
 

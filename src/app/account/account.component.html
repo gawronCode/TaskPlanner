@@ -34,8 +34,8 @@
                         <input formControlName='email' type="email" matInput />
                         <mat-error *ngIf="formEmail.invalid">{{getErrorFieldEmail()}}</mat-error>
                     </mat-form-field>
-                    <button class="editBtnAction" id="cancel" mat-icon-button (click)="toogleEmailEdit()"><mat-icon >cancel</mat-icon></button>
-                    <button class="editBtnAction" [disabled]="formEmail.invalid" id="save" mat-icon-button (click)="saveEmailChange()"><mat-icon >save</mat-icon></button>
+                    <button type="button" class="editBtnAction" id="cancel" mat-icon-button (click)="toogleEmailEdit()"><mat-icon >cancel</mat-icon></button>
+                    <button type="submit" class="editBtnAction" [disabled]="formEmail.invalid" id="save" mat-icon-button (click)="saveEmailChange()"><mat-icon >save</mat-icon></button>
                 </form>
             </div>
             <hr>
@@ -49,8 +49,8 @@
                         <input formControlName='password' type="password" matInput />
                         <mat-error *ngIf="formPassword.invalid">{{getErrorFieldPassword()}}</mat-error>
                     </mat-form-field>
-                    <button style="top: 45px;" class="editBtnAction" id="cancel" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon >cancel</mat-icon></button>
-                    <button style="top: 45px;" [disabled]="formPassword.invalid" class="editBtnAction" id="save" mat-icon-button (click)="savePasswordChange()"><mat-icon >save</mat-icon></button>
+                    <button type="button" style="top: 45px;" class="editBtnAction" id="cancel" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon >cancel</mat-icon></button>
+                    <button type="submit" style="top: 45px;" [disabled]="formPassword.invalid" class="editBtnAction" id="save" mat-icon-button (click)="savePasswordChange()"><mat-icon >save</mat-icon></button>
                     <mat-form-field appearance="outline">
                         <mat-label>Powtórz hasło</mat-label>
                         <input formControlName='repeatPassword' type="password" matInput />
