@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { waitForAsync } from '@angular/core/testing';
 import {
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
@@ -7,6 +8,7 @@ import {
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import 'moment/locale/pl';
+import { EventService } from '../_services/event.service';
 
 
 
@@ -26,29 +28,44 @@ import 'moment/locale/pl';
 })
 export class TasksComponent implements OnInit {
 
-  constructor() { }
+  constructor(private eventService: EventService) { }
+
+  tasks: any;
+
+  xD: any;
 
   ngOnInit(): void {
-    console.log(new Date())
     this.selected = new Date();
+    this.eventService.getAllEvents().subscribe(data => {
+      this.tasks = ((data as []));
+    })
+    
   }
 
-  datesToHighlight = ['2021-06-21','2021-06-24','2021-07-3'];
+  datesToHighlight:string[] = [];
 
   selected: Date|any;
 
-  printDate(){
-    console.log(new Date(this.selected))
-    
-    console.log(this.selected.format("DD/MM/YYYY"))
+
+  getDayEvents(){
+
+    console.log(this.selected._i)
+    console.log(new Date(this.tasks[1].eventDate).getDate())
   }
 
-  dateClass() {
+
+  populateCalendar() {
+
+    this.tasks.forEach((task: { eventDate: string; }) => {
+      this.datesToHighlight.push(task.eventDate)
+    });
+
     return (date: Date): MatCalendarCellCssClasses => {
       var highlightDate = this.datesToHighlight
         .map(strDate => new Date(strDate))
         .some(
           d =>{
+            console.log(d.getDate())
             return d.getDate() === new Date(date).getDate() &&
             d.getMonth() === new Date(date).getMonth() &&
             d.getFullYear() === new Date(date).getFullYear()

@@ -1,7 +1,7 @@
-<div class="content">
+<div *ngIf="tasks" class="content">
     <div class="leftDiv">
         <mat-card class="calendar">
-            <mat-calendar [dateClass]="dateClass()" (dblclick)="printDate()" (selectedChange)="selected = $event"></mat-calendar>
+            <mat-calendar [dateClass]="populateCalendar()" (click)="getDayEvents()"  (selectedChange)="selected = $event"></mat-calendar>
         </mat-card>
         <!-- <p>Selected date: {{selected|date:'shortDate':'pl'}}</p> -->
     </div>
@@ -10,16 +10,8 @@
         <div class="tasks">
             <h2 class="taskTitle">Zadania na dzień  {{selected|date:'shortDate'}}</h2>
             
-            <div class="taskDiv">
-                Zadanie 1
-            </div>
-
-            <div class="taskDiv">
-                Zadanie 2
-            </div>
-
-            <div class="taskDiv">
-                Zadanie 3
+            <div *ngFor="let task of tasks" class="taskDiv">
+                {{task.content}}
             </div>
 
         </div>
