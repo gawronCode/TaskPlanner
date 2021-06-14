@@ -44,3 +44,9 @@ select:-webkit-autofill:focus {
   box-shadow: 5px 5px 5px #000000;
   color: #FFFFFF;
 }
+
+.special-date {
+  background-color: rgba(0, 0, 0, 0.199);
+  border-radius: 5px;
+}
+

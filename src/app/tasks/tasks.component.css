@@ -1,0 +1,125 @@
+.content{
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  margin-top: 50px;
+  max-width: 1800px;
+}
+
+.calendar {
+    box-shadow: 0px 0px 20px #000000ab;
+    padding: 20px;
+    width: 100%;
+    max-width: 700px;
+    min-width: 350px;
+    background-color: #424242;
+}
+
+.tasks {
+  box-shadow: 0px 0px 20px #000000ab;
+  padding: 0px;
+  height: 400px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 700px;
+  min-width: 350px;
+  margin: 0;
+  background-color: #424242;
+}
+
+.leftDiv{
+  float: left;
+  margin: 0;
+  width:40%;
+  max-width: 700px;
+  padding: 5px;
+  margin-left: 5%;
+}
+
+.rightDiv{
+  float:right;
+  margin: 0;
+  width:40%;
+  max-width: 700px;
+  padding: 5px;
+  top: 0;
+  margin-right: 5%;
+}
+
+.taskTitle{
+  padding-top: 50px;
+}
+
+.taskDiv{
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.199);
+  margin-left: 10px;
+  margin-right: 10px;
+  padding:15px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+::ng-deep .mat-calendar-body-today {
+  background-color: #ffffff8e;
+  border-radius: 5px;
+}
+
+::ng-deep .mat-calendar-body-cell:hover{
+  background-color: rgba(255, 255, 255, 0.397);
+  border-radius: 5px;
+}
+
+::ng-deep .mat-calendar-body-cell-content{
+  background: none !important;
+}
+
+::ng-deep .mat-calendar-body-active:not(.mat-calendar-body) { background-color: none; border:none }
+
+::ng-deep .mat-calendar-body-today:not(.mat-calendar-body-selected) { border-radius: 5px; border-width: 2px;}
+
+@media screen and (max-width: 1000px) {
+  .content{
+    padding-top: 5%;
+    width: 90%;
+    margin: auto;
+    text-align: center;
+  }
+
+  .calendar {
+    box-shadow: 0px 0px 20px #000000ab;
+    padding: 20px;
+    width: 60%;
+    background-color: #424242;
+    margin: auto;
+  }
+
+  .tasks {
+    box-shadow: 0px 0px 20px #000000ab;
+    padding: 20px;
+    border-radius: 5px;
+    width: 60%;
+    background-color: #424242;
+    margin: auto;
+  }
+
+  .leftDiv{
+    float: none;
+    display:inline;
+    margin: 0;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    margin-right: 100px;
+    width:30%;
+    max-width: 500px;
+  }
+
+  .rightDiv{
+    float: none;
+    display: inline;
+    margin: 0;
+    margin-bottom: 10vh;
+    width:30%;
+    max-width: 500px;
+  }
+}

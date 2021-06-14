@@ -18,6 +18,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { AccountComponent } from './account/account.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DeleteComponent } from './account/delete/delete.component';
+import { TasksComponent } from './tasks/tasks.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { DeleteComponent } from './account/delete/delete.component';
     AccountComponent,
     NavbarComponent,
     DeleteComponent,
+    TasksComponent,
   ],
   imports: [
     BrowserModule,

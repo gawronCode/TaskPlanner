@@ -5,6 +5,7 @@ import {LoginComponent} from './auth/login/login.component';
 import {HomeComponent} from './home/home.component';
 import { AccountComponent } from './account/account.component';
 import { DeleteComponent } from './account/delete/delete.component';
+import { TasksComponent } from './tasks/tasks.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'auth/login', component:LoginComponent},
   {path: 'account', component:AccountComponent},
   {path: 'account/delete', component:DeleteComponent},
+  {path: 'tasks', component:TasksComponent},
   {path: '', component:HomeComponent},
   {path: '**', redirectTo:''}
 ];
