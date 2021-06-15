@@ -59,11 +59,47 @@
   padding:15px;
   border-radius: 5px;
   margin-bottom: 5px;
+  overflow: hidden;
 }
 
-::ng-deep .mat-calendar-body-today {
-  background-color: #ffffff8e;
-  border-radius: 5px;
+mat-label{
+  color: #FFFFF9;
+}
+
+
+.taskContent{
+  float: left;
+  width: 80%;
+}
+
+.taskTime{
+  width: 20%;
+  text-align: right;
+  overflow: hidden;
+}
+
+.formDiv{
+  padding: 0;
+}
+
+.taskField{
+  margin-right: 5px;
+  width: 50%;
+}
+
+.leftInput{
+  width: 70%;
+  float: left;
+}
+
+.rightBtns{
+  padding-top: 10px;
+  text-align: right;
+  overflow: hidden;
+}
+
+.addTaskBtnDiv{
+  margin-top: 20px;
 }
 
 ::ng-deep .mat-calendar-body-cell:hover{
@@ -71,13 +107,34 @@
   border-radius: 5px;
 }
 
-::ng-deep .mat-calendar-body-cell-content{
-  background: none !important;
+
+
+#save{
+  color:#9C27B0;
 }
 
-::ng-deep .mat-calendar-body-active:not(.mat-calendar-body) { background-color: none; border:none }
+#cancel{
+  color: rgba(255, 0, 0, 0.651);
+}
 
-::ng-deep .mat-calendar-body-today:not(.mat-calendar-body-selected) { border-radius: 5px; border-width: 2px;}
+::ng-deep .mat-calendar-body-cell-content{
+  background: none !important;
+   pointer-events: none;
+}
+
+::ng-deep .mat-calendar-body-selected:not(.mat-calendar-body-cell-today){
+  border: solid;
+  border-radius: 5px;
+  border-color: rgba(255, 0, 0, 0.397) !important;
+}
+
+
+
+::ng-deep .mat-calendar-body-active:not(.mat-calendar-body) { background-color: none !important; border:none !important;}
+
+::ng-deep .mat-calendar-body-today:not(.mat-calendar-body-selected) { border-radius: 5px !important; border-width: 3px;}
+
+
 
 @media screen and (max-width: 1000px) {
   .content{
@@ -122,5 +179,37 @@
     margin-bottom: 10vh;
     width:30%;
     max-width: 500px;
+  }
+
+  .taskField{
+    margin-right: 5px;
+    width: 56%;
+  }
+  .leftInput{
+    width: 75%;
+    float: left;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .taskField{
+    margin-right: 5px;
+    width: 75%;
+  }
+  .leftInput{
+    width: 80%;
+    float: left;
+  }
+}
+
+
+@media screen and (max-width: 800px) {
+  .taskField{
+    margin-right: 5px;
+    width: 45%;
+  }
+  .leftInput{
+    width: 70%;
+    float: left;
   }
 }

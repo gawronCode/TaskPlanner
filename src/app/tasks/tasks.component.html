@@ -1,17 +1,50 @@
 <div *ngIf="tasks" class="content">
     <div class="leftDiv">
         <mat-card class="calendar">
-            <mat-calendar [dateClass]="populateCalendar()" (click)="getDayEvents()"  (selectedChange)="selected = $event"></mat-calendar>
+            <mat-calendar #calendar [selected]="selected" [dateClass]="populateCalendar()"   (selectedChange)="getDayEvents($event)"></mat-calendar>
         </mat-card>
         <!-- <p>Selected date: {{selected|date:'shortDate':'pl'}}</p> -->
     </div>
 
     <div class="rightDiv">
         <div class="tasks">
-            <h2 class="taskTitle">Zadania na dzień  {{selected|date:'shortDate'}}</h2>
+            <h2 class="taskTitle">Zadania na dzień  {{selected|date:'dd-LL-yyyy'}}</h2>
             
-            <div *ngFor="let task of tasks" class="taskDiv">
-                {{task.content}}
+
+            <div class="wrapper" *ngIf='selectedTasks.length'>
+                <div *ngFor="let task of selectedTasks" class="taskDiv">
+                    <div class="taskContent">
+                        <p>{{task.content}}</p>
+                    </div>
+                    <div class="taskTime">
+                        <p>{{task.eventDate | date:'HH:mm'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf='!selectedTasks.length'>
+                <p>Brak zadań danego dnia</p>
+            </div>
+            <div *ngIf="!addTask" class="addTaskBtnDiv">
+                <button id="addBtn" (click)="toogleAddTask()" class="editBtnAction" mat-icon-button ><mat-icon >add_circle_outline</mat-icon></button>
+            </div>
+            <div *ngIf="addTask" class="taskDiv">
+                <form class="formDiv" [formGroup]="form">
+                    <div class="leftInput">
+                        <mat-form-field class="taskField">
+                            <mat-label>Nowe zadanie</mat-label>
+                            <input formControlName='content' matInput />
+                            <mat-error *ngIf="form.invalid">Podaj nowe zadanie</mat-error>
+                        </mat-form-field>
+                        <mat-form-field style="width: 70px;">
+                            <input formControlName='eventDate' type="time" matInput />
+                            <mat-error *ngIf="form.invalid">Godzina</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="rightBtns">  
+                        <button [disabled]="form.invalid" (click)="createTask()" type="submit" class="editBtnAction" id="save" mat-icon-button ><mat-icon >save</mat-icon></button>
+                        <button type="button" (click)="toogleAddTask()" class="editBtnAction" id="cancel" mat-icon-button ><mat-icon >cancel</mat-icon></button>
+                    </div>
+                </form>
             </div>
 
         </div>

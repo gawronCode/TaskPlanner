@@ -50,3 +50,7 @@ select:-webkit-autofill:focus {
   border-radius: 5px;
 }
 
+.selected-date{
+  background-color: #9b27b073;
+  border-radius: 5px;
+}
