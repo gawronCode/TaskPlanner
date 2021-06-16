@@ -8,6 +8,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatCardModule} from '@angular/material/card';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 
 
@@ -23,6 +26,8 @@ import {MatCardModule} from '@angular/material/card';
     MatProgressSpinnerModule,
     MatDatepickerModule,
     MatCardModule,
+    MatRadioModule,
+    MatCheckboxModule,
   ],
   imports: [
     CommonModule

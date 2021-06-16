@@ -12,7 +12,9 @@ export class EventService {
   constructor(private http:HttpClient, private authService: AuthService) { }
 
   GetAllURL = 'Events/GetAllEvents'
+  GetUserEventsURL = 'Events/GetUserEvents'
   CreateURL = 'Events/Create'
+  DeleteURL = 'Events/Delete'
 
   getAllEvents(): Observable<any> {
     const token: any = JSON.parse(localStorage.getItem('user') as any)?.token;
@@ -24,6 +26,15 @@ export class EventService {
 
   }
 
+  getUserEvents(): Observable<any> {
+    const token: any = JSON.parse(localStorage.getItem('user') as any)?.token;
+    const header: HttpHeaders = new HttpHeaders().set("Authorization", "Bearer "+token)
+
+    return this.http.get(environment.apiURL + this.GetUserEventsURL, {
+      headers: header
+    })
+
+  }
 
   createEvent(event: any) { 
     const token: any = JSON.parse(localStorage.getItem('user') as any)?.token;
@@ -33,6 +44,15 @@ export class EventService {
       headers: header
     })
 
+  }
+
+  deleteEvent(event: any){
+    const token: any = JSON.parse(localStorage.getItem('user') as any)?.token;
+    const header: HttpHeaders = new HttpHeaders().set("Authorization", "Bearer "+token)
+
+    return this.http.post(environment.apiURL + this.DeleteURL, event, {
+      headers: header
+    })
   }
 
 

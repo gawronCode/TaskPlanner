@@ -12,20 +12,25 @@
             
 
             <div class="wrapper" *ngIf='selectedTasks.length'>
-                <div *ngFor="let task of selectedTasks" class="taskDiv">
+                <div *ngFor="let task of selectedTasks; let i = index" class="taskDiv">
                     <div class="taskContent">
                         <p>{{task.content}}</p>
                     </div>
-                    <div class="taskTime">
-                        <p>{{task.eventDate | date:'HH:mm'}}</p>
+                    <div  class="taskTime">
+                        <p>{{task.eventDate | date:'HH:mm'}} <mat-checkbox [disabled]="editTaskb" (click)="setTaskId(task.id)" [checked]="taskSelected === task.id" (change)="taskSelected = task.id" style="padding-left: 5px;" color="primary" value={{task.id}}></mat-checkbox></p>
                     </div>
+                    <!-- <div *ngIf="!taskId" class="taskTime">
+                        <p>{{task.eventDate | date:'HH:mm'}} <mat-checkbox [checked]=false (change)="taskId = task.id" style="padding-left: 5px;" color="primary" value={{task.id}}></mat-checkbox></p>
+                    </div> -->
                 </div>
             </div>
-            <div *ngIf='!selectedTasks.length'>
+            <!-- <div *ngIf='!selectedTasks.length'>
                 <p>Brak zadań danego dnia</p>
-            </div>
+            </div> -->
             <div *ngIf="!addTask" class="addTaskBtnDiv">
-                <button id="addBtn" (click)="toogleAddTask()" class="editBtnAction" mat-icon-button ><mat-icon >add_circle_outline</mat-icon></button>
+                <button id="addBtn" (click)="toogleAddTask()" [disabled]="taskId" class="editBtnAction" mat-icon-button ><mat-icon >add_circle_outline</mat-icon></button>
+                <button id="addBtn" (click)="editTask()" [disabled]="selectedTasks.length==0 || !taskId" class="editBtnAction" mat-icon-button ><mat-icon >edit_note</mat-icon></button>
+                <button id="addBtn" (click)="deleteTask()" [disabled]="!taskId" class="editBtnAction" mat-icon-button ><mat-icon >delete_forever</mat-icon></button>
             </div>
             <div *ngIf="addTask" class="taskDiv">
                 <form class="formDiv" [formGroup]="form">
@@ -42,7 +47,7 @@
                     </div>
                     <div class="rightBtns">  
                         <button [disabled]="form.invalid" (click)="createTask()" type="submit" class="editBtnAction" id="save" mat-icon-button ><mat-icon >save</mat-icon></button>
-                        <button type="button" (click)="toogleAddTask()" class="editBtnAction" id="cancel" mat-icon-button ><mat-icon >cancel</mat-icon></button>
+                        <button type="button" (click)="toogleFlags()" class="editBtnAction" id="cancel" mat-icon-button ><mat-icon >cancel</mat-icon></button>
                     </div>
                 </form>
             </div>

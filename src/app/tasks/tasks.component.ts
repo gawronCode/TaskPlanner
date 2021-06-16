@@ -8,7 +8,9 @@ import {
 } from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { MatCalendar, MatCalendarBody, MatCalendarCellCssClasses, MatCalendarHeader, MatDatepickerContent } from '@angular/material/datepicker';
+import * as moment from 'moment';
 import 'moment/locale/pl';
+import { forkJoin, Observable } from 'rxjs';
 import { EventService } from '../_services/event.service';
 
 
@@ -31,23 +33,57 @@ import { EventService } from '../_services/event.service';
 
 export class TasksComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder,
-    private eventService: EventService) { }
+
+  datesToHighlight:string[] = [];
+  selectedTasks: any[] = [];
+
+  taskSelected: any;
+  taskId: any;
+  selected: Date|any = new Date();
 
   tasks: any;
 
   addTask:boolean=false;
-
-  toogleAddTask(){
-    this.addTask = !this.addTask;
-  }
+  editTaskb:boolean=false;
 
   eventContent: any;
   eventTime: any;
 
   form: any;
 
+  @ViewChild('calendar')  calendar: MatCalendar<Date>;
+  selectedDate: any;  
+
+
+  constructor(private formBuilder: FormBuilder,
+    private eventService: EventService) {
+      
+     }
+
+
+
+  toogleAddTask(){
+    this.addTask = !this.addTask;
+  }
+
+  toogleFlags(){
+    this.addTask = false;
+    this.editTaskb = false;
+  }
+
+  toogleEditTask(){
+    this.editTaskb = !this.editTaskb;
+  }
+
+  editTask(){
+    this.toogleEditTask();
+    this.toogleAddTask();
+  }
+
+
   ngOnInit(): void {
+    
+    
     this.form = this.formBuilder.group({
       content: ['', {
         validators: [Validators.required]
@@ -56,7 +92,12 @@ export class TasksComponent implements OnInit {
         validators: [Validators.required]
       }]
     });
-    this.eventService.getAllEvents().subscribe(data => {
+
+    this.getUserEvents()
+  }
+
+  getUserEvents(){
+    return this.eventService.getUserEvents().subscribe(data =>  {
       this.tasks = ((data as []));
       this.tasks.forEach(((element: { eventDate: string | number | Date; }) => {
         if( new Date(element.eventDate).getDate() == new Date(this.selected).getDate() &&
@@ -65,35 +106,81 @@ export class TasksComponent implements OnInit {
               this.selectedTasks.push(element);
             }
       }));
-      this.tasks.forEach((task: { eventDate: string; }) => {
-        this.datesToHighlight.push(task.eventDate)
-      });
     })
   }
 
+  getUserEventsRefresh(){
+    return this.eventService.getUserEvents().subscribe(async data =>  {
+      this.tasks = ((data as []));
+      this.tasks.forEach(((element: { eventDate: string | number | Date; }) => {
+        if( new Date(element.eventDate).getDate() == new Date(this.selected).getDate() &&
+            new Date(element.eventDate).getMonth() == new Date(this.selected).getMonth() &&
+            new Date(element.eventDate).getFullYear() == new Date(this.selected).getFullYear()){
+              this.selectedTasks.push(element);
+            }
+      }));
+      await this.onRemove();
+    })
+  }
 
   createTask(){    
     const time: string[] = (this.form.value.eventDate as string).split(':')
     const dateTime = new Date(new Date(new Date(this.selected).setHours(parseInt(time[0]))).setMinutes(parseInt(time[1])))
-
     this.eventService.createEvent({content: this.form.value.content, eventDate: dateTime}).subscribe(data => {
       this.addTask = false;
       this.selectedTasks = [];
       this.ngOnInit();
-      this.onSelect()
+      this.onSelect(dateTime);
     })
   }
 
+  async deleteTask(){
+    var eventId = this.taskId;
+    this.taskSelected=false;
+    this.taskId = undefined;
+    
+    if (eventId == undefined) return;
+    
+    this.eventService.deleteEvent({id: eventId, content:"",eventDate: new Date()}).subscribe(async data => {
+      this.selectedTasks = [];
+      this.getUserEventsRefresh();
+    })
 
+    // await forkJoin(this.getUserEvents())
 
-  datesToHighlight:string[] = [];
-  selectedTasks: any[] = [];
+    await this.delay(500)
+    // this.onRemove();
+  }
 
+  async delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
 
-  selected: Date|any = new Date();
+  onSelect(dateTime: Date){
+    dateTime.setHours(10);
+    var dateToHighlight = moment(dateTime).format('YYYY-MM-DDTHH:MM:00.000')+'Z'
+    this.datesToHighlight.push(dateToHighlight);
+    this.calendar.updateTodaysDate();
+  }
+
+  async onRemove(){
+    this.datesToHighlight = []
+    this.tasks.forEach((task: { eventDate: string; }) => {
+      this.datesToHighlight.push(task.eventDate)
+    });
+    this.calendar.updateTodaysDate()
+    await this.delay(50).finally(()=> this.calendar.updateTodaysDate());
+  }
+
+  setTaskId(id: number){
+    if(this.editTaskb) return;
+    if(this.taskId == id) this.taskId=undefined;
+    else if(this.taskId != id) this.taskId = id;
+  }
 
   getDayEvents(event: any){
-
+    this.taskSelected = false;
+    this.taskId=undefined;
     this.selected = event;
     this.addTask = false;
     this.selectedTasks = [];
@@ -106,18 +193,14 @@ export class TasksComponent implements OnInit {
     }));
     this.selectedTasks = this.selectedTasks.sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime())
   }
-
-  @ViewChild('calendar')  calendar: MatCalendar<Date>;
-  selectedDate: any;  
-
-  onSelect(){
-    var dateToHighlight = this.selected.format('YYYY-MM-DDTHH:MM:00.000')+'Z'
-    this.datesToHighlight.push(dateToHighlight);
-    this.calendar.updateTodaysDate();
-  }
+  
 
   populateCalendar() {
-    
+    this.datesToHighlight = []
+    this.tasks.forEach((task: { eventDate: string; }) => {
+      this.datesToHighlight.push(task.eventDate)
+    });
+
     return (date: Date): MatCalendarCellCssClasses => {
       var highlightDate = this.datesToHighlight
         .map(strDate => new Date(strDate))
@@ -131,6 +214,7 @@ export class TasksComponent implements OnInit {
       
       return highlightDate ? 'special-date' : '';
     };
+    
 
   }
 
