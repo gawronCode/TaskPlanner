@@ -74,6 +74,7 @@ form{
 
 h2{
     padding-left: 5px;
+    font-size: 15px;
 }
 
 .toast-top-center { 
@@ -81,4 +82,29 @@ h2{
     margin: 0 auto;  
     left: 50%;   
     margin-left: -150px;
+}
+
+
+.wrapper{
+    overflow: hidden;
+}
+
+.first{
+    width: 90%;
+    float:left;
+}
+
+.second{
+    overflow: hidden;
+}
+
+
+@media screen and (max-width: 750px) {
+    .first{
+        width: 200px;
+    }
+
+    h2{
+        font-size: 13px;
+    }
 }

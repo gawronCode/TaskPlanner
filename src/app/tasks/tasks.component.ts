@@ -49,6 +49,8 @@ export class TasksComponent implements OnInit {
   eventContent: any;
   eventTime: any;
 
+  editedTaskDate: any;
+
   form: any;
 
   @ViewChild('calendar')  calendar: MatCalendar<Date>;
@@ -69,29 +71,23 @@ export class TasksComponent implements OnInit {
   toogleFlags(){
     this.addTask = false;
     this.editTaskb = false;
+    this.form = this.getForm();
   }
 
   toogleEditTask(){
     this.editTaskb = !this.editTaskb;
   }
 
-  editTask(){
-    this.toogleEditTask();
-    this.toogleAddTask();
+
+  hideEditForm(){
+    this.editTaskb = false;
   }
 
 
   ngOnInit(): void {
     
     
-    this.form = this.formBuilder.group({
-      content: ['', {
-        validators: [Validators.required]
-      }],
-      eventDate: ['', {
-        validators: [Validators.required]
-      }]
-    });
+    this.form = this.getForm();
 
     this.getUserEvents()
   }
@@ -109,6 +105,17 @@ export class TasksComponent implements OnInit {
     })
   }
 
+  getForm(){
+    return this.formBuilder.group({
+      content: ['', {
+        validators: [Validators.required]
+      }],
+      eventDate: ['', {
+        validators: [Validators.required]
+      }]
+    });
+  }
+
   getUserEventsRefresh(){
     return this.eventService.getUserEvents().subscribe(async data =>  {
       this.tasks = ((data as []));
@@ -123,6 +130,21 @@ export class TasksComponent implements OnInit {
     })
   }
 
+  getUserEventsRefreshEdit(){
+    return this.eventService.getUserEvents().subscribe(async data =>  {
+      this.tasks = ((data as []));
+      this.tasks.forEach(((element: { eventDate: string | number | Date; }) => {
+        if( new Date(element.eventDate).getDate() == new Date(this.selected).getDate() &&
+            new Date(element.eventDate).getMonth() == new Date(this.selected).getMonth() &&
+            new Date(element.eventDate).getFullYear() == new Date(this.selected).getFullYear()){
+              this.selectedTasks.push(element);
+            }
+      }));
+      this.getDayEvents(this.selected);
+    })
+  }
+
+
   createTask(){    
     const time: string[] = (this.form.value.eventDate as string).split(':')
     const dateTime = new Date(new Date(new Date(this.selected).setHours(parseInt(time[0]))).setMinutes(parseInt(time[1])))
@@ -131,6 +153,22 @@ export class TasksComponent implements OnInit {
       this.selectedTasks = [];
       this.ngOnInit();
       this.onSelect(dateTime);
+    })
+  }
+
+  editTask(){
+    const time: string[] = (this.form.value.eventDate as string).split(':')
+    const dateTime = new Date(this.editedTaskDate);
+    dateTime.setHours(parseInt(time[0]));
+    dateTime.setMinutes(parseInt(time[1]));
+    var eventId = this.taskId;
+
+    if(eventId == undefined) return;
+
+    this.eventService.updateEvent({id: eventId, content:this.form.value.content, eventDate: dateTime}).subscribe(() => {
+      this.selectedTasks = [];
+      this.toogleFlags();
+      this.getUserEventsRefreshEdit()
     })
   }
 
@@ -146,10 +184,6 @@ export class TasksComponent implements OnInit {
       this.getUserEventsRefresh();
     })
 
-    // await forkJoin(this.getUserEvents())
-
-    await this.delay(500)
-    // this.onRemove();
   }
 
   async delay(ms: number) {
@@ -172,13 +206,28 @@ export class TasksComponent implements OnInit {
     await this.delay(50).finally(()=> this.calendar.updateTodaysDate());
   }
 
-  setTaskId(id: number){
-    if(this.editTaskb) return;
-    if(this.taskId == id) this.taskId=undefined;
-    else if(this.taskId != id) this.taskId = id;
+  setSelectedTaskData(id: number, content: any, date: any){
+    if(this.editTaskb || this.addTask) return;
+    if(this.taskId == id) {
+      this.editedTaskDate = null;
+      this.taskId=undefined;
+      this.form = this.getForm();
+    } else if(this.taskId != id) {
+      this.editedTaskDate = date;
+      this.taskId = id;
+      this.form = this.formBuilder.group({
+        content: [content, {
+          validators: [Validators.required]
+        }],
+        eventDate: [moment(date).format('HH:mm'), {
+          validators: [Validators.required]
+        }]
+      });
+    }
   }
 
   getDayEvents(event: any){
+    this.toogleFlags();
     this.taskSelected = false;
     this.taskId=undefined;
     this.selected = event;

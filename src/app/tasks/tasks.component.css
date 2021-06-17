@@ -239,3 +239,14 @@ mat-label{
     float: left;
   }
 }
+
+.spinner{
+  text-align: center;
+  width: 80%;
+  margin: auto;
+  margin-top: 50px;
+}
+
+mat-spinner{
+  margin: auto;
+}

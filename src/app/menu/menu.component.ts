@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { userDto } from '../_models/user';
 import { AccountService } from '../_services/account.service';
@@ -16,7 +17,9 @@ export class MenuComponent implements OnInit {
   loggedIn: boolean = false;
   userName: string = '';
 
-  constructor(public authService: AuthService, public accountService: AccountService) { }
+  constructor(public authService: AuthService, 
+    public accountService: AccountService,
+    private router: Router) { }
 
   ngOnInit(): void {
     // const user = JSON.parse(localStorage.getItem('user') as any)
@@ -29,6 +32,7 @@ export class MenuComponent implements OnInit {
   }
 
   logout(){
+    this.router.navigate(['/auth/login'])
     this.authService.logout();
   }
  

@@ -15,6 +15,7 @@ export class EventService {
   GetUserEventsURL = 'Events/GetUserEvents'
   CreateURL = 'Events/Create'
   DeleteURL = 'Events/Delete'
+  UpdateURL = 'Events/Update'
 
   getAllEvents(): Observable<any> {
     const token: any = JSON.parse(localStorage.getItem('user') as any)?.token;
@@ -44,6 +45,16 @@ export class EventService {
       headers: header
     })
 
+  }
+
+  updateEvent(event: any) { 
+    const token: any = JSON.parse(localStorage.getItem('user') as any)?.token;
+    const header: HttpHeaders = new HttpHeaders().set("Authorization", "Bearer "+token)
+
+    console.log(event)
+    return this.http.put(environment.apiURL + this.UpdateURL, event, {
+      headers: header
+    })
   }
 
   deleteEvent(event: any){

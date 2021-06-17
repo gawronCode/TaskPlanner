@@ -9,8 +9,13 @@
         </div>
 
         <div *ngIf="userName && email" class="content">
-            <div *ngIf="!nameEdit">
-                <h2>Nick: {{userName}} <button class="editBtn" mat-icon-button (click)="toogleNameEdit()"><mat-icon>edit</mat-icon></button></h2>
+            <div class="wrapper" *ngIf="!nameEdit">
+                <div class="first">
+                    <h2>Nick: {{userName}}</h2>
+                </div>
+                <div class="second">
+                    <button class="editBtn" mat-icon-button (click)="toogleNameEdit()"><mat-icon>edit</mat-icon></button>
+                </div>
             </div>
             <div *ngIf="nameEdit" style="height: 70px">
                 <form [formGroup]="formName">
@@ -24,8 +29,14 @@
                 </form>
             </div>
             <hr>
-            <div *ngIf="!emailEdit">
-                <h2>Email: {{email}} <button class="editBtn" mat-icon-button (click)="toogleEmailEdit()"><mat-icon>edit</mat-icon></button></h2>
+            <div class="wrapper" *ngIf="!emailEdit">
+                <div class="first">
+                    <h2>Email: {{email}}</h2>
+                </div>
+
+                <div class="second">
+                    <button class="editBtn" mat-icon-button (click)="toogleEmailEdit()"><mat-icon>edit</mat-icon></button>
+                </div>
             </div>
             <div *ngIf="emailEdit" style="height: 70px">
                 <form [formGroup]="formEmail">
@@ -39,8 +50,13 @@
                 </form>
             </div>
             <hr>
-            <div *ngIf="!passwordEdit">
-                <h2>Hasło: ****** <button class="editBtn" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon>edit</mat-icon></button></h2>
+            <div class="wrapper" *ngIf="!passwordEdit">
+                <div class="first">
+                    <h2>Hasło: ******</h2>
+                </div>
+                <div class="second">
+                    <button class="editBtn" mat-icon-button (click)="tooglePasswordEdit()"><mat-icon>edit</mat-icon></button>
+                </div>
             </div>
             <div *ngIf="passwordEdit" style="height: 130px">
                 <form [formGroup]="formPassword">

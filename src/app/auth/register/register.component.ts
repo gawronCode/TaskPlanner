@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       name: ['', {
-        validators: [Validators.required, Validators.minLength(5)]
+        validators: [Validators.required, Validators.minLength(2), Validators.maxLength(10)]
       }],
       email: ['', {
         validators: [Validators.required, Validators.email]
@@ -45,8 +45,10 @@ export class RegisterComponent implements OnInit {
 
     if(field?.hasError('required')){
       return 'Proszę podać nick';
-    } else if (field?.hasError('minLength')){
-      return 'Minimalna długość nicku to 5 znaków';
+    } else if (field?.hasError('minlength')){
+      return "Nick za krótki (min 2)";
+    } else if (field?.hasError('maxlength')){
+      return "Nick za długi (max 10)"
     }
     return '';
   }

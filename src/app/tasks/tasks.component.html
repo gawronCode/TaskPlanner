@@ -3,7 +3,6 @@
         <mat-card class="calendar">
             <mat-calendar #calendar [selected]="selected" [dateClass]="populateCalendar()"   (selectedChange)="getDayEvents($event)"></mat-calendar>
         </mat-card>
-        <!-- <p>Selected date: {{selected|date:'shortDate':'pl'}}</p> -->
     </div>
 
     <div class="rightDiv">
@@ -17,19 +16,13 @@
                         <p>{{task.content}}</p>
                     </div>
                     <div  class="taskTime">
-                        <p>{{task.eventDate | date:'HH:mm'}} <mat-checkbox [disabled]="editTaskb" (click)="setTaskId(task.id)" [checked]="taskSelected === task.id" (change)="taskSelected = task.id" style="padding-left: 5px;" color="primary" value={{task.id}}></mat-checkbox></p>
+                        <p>{{task.eventDate | date:'HH:mm'}} <mat-checkbox [disabled]="editTaskb || addTask" (click)="setSelectedTaskData(task.id, task.content, task.eventDate)" [checked]="taskSelected === task.id" (change)="taskSelected = task.id" style="padding-left: 5px;" color="primary" value={{task.id}}></mat-checkbox></p>
                     </div>
-                    <!-- <div *ngIf="!taskId" class="taskTime">
-                        <p>{{task.eventDate | date:'HH:mm'}} <mat-checkbox [checked]=false (change)="taskId = task.id" style="padding-left: 5px;" color="primary" value={{task.id}}></mat-checkbox></p>
-                    </div> -->
                 </div>
             </div>
-            <!-- <div *ngIf='!selectedTasks.length'>
-                <p>Brak zadań danego dnia</p>
-            </div> -->
-            <div *ngIf="!addTask" class="addTaskBtnDiv">
+            <div *ngIf="!editTaskb && !addTask" class="addTaskBtnDiv">
                 <button id="addBtn" (click)="toogleAddTask()" [disabled]="taskId" class="editBtnAction" mat-icon-button ><mat-icon >add_circle_outline</mat-icon></button>
-                <button id="addBtn" (click)="editTask()" [disabled]="selectedTasks.length==0 || !taskId" class="editBtnAction" mat-icon-button ><mat-icon >edit_note</mat-icon></button>
+                <button id="addBtn" (click)="toogleEditTask()" [disabled]="selectedTasks.length==0 || !taskId" class="editBtnAction" mat-icon-button ><mat-icon >edit_note</mat-icon></button>
                 <button id="addBtn" (click)="deleteTask()" [disabled]="!taskId" class="editBtnAction" mat-icon-button ><mat-icon >delete_forever</mat-icon></button>
             </div>
             <div *ngIf="addTask" class="taskDiv">
@@ -51,8 +44,30 @@
                     </div>
                 </form>
             </div>
+            <div *ngIf="editTaskb" class="taskDiv">
+                <form class="formDiv" [formGroup]="form">
+                    <div class="leftInput">
+                        <mat-form-field class="taskField">
+                            <mat-label>Nowe zadanie</mat-label>
+                            <input formControlName='content' matInput />
+                            <mat-error *ngIf="form.invalid">Podaj nowe zadanie</mat-error>
+                        </mat-form-field>
+                        <mat-form-field style="width: 70px;">
+                            <input formControlName='eventDate' type="time" matInput />
+                            <mat-error *ngIf="form.invalid">Godzina</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="rightBtns">  
+                        <button [disabled]="form.invalid" (click)="editTask()" type="submit" class="editBtnAction" id="save" mat-icon-button ><mat-icon >save</mat-icon></button>
+                        <button type="button" (click)="hideEditForm()" class="editBtnAction" id="cancel" mat-icon-button ><mat-icon >cancel</mat-icon></button>
+                    </div>
+                </form>
+            </div>
 
         </div>
-        <!-- <p>Selected date: {{selected|date:'shortDate':'pl'}}</p> -->
     </div>
+</div>
+
+<div *ngIf="!tasks" class="spinner">
+    <mat-spinner></mat-spinner>
 </div>

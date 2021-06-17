@@ -22,7 +22,6 @@ export class ErrorInterceptor implements HttpInterceptor {
         if(error.status == 0){
           this.toastr.error("Serwer czasowo niedostępny");
         } else if (error.status == 401){
-          this.toastr.error("Zaloguj się aby uzyskać dostęp");
           this.router.navigate(['auth/login'])
         } else if (error.status == 500){
           this.toastr.error("Ten adres email jest już zajęty");

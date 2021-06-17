@@ -1,10 +1,6 @@
 <mat-toolbar class="primary">
     <h1 id="logo">TaskPlanner</h1>
-    <span>
-        <a mat-button routerLink="">
-            <mat-icon>home</mat-icon>Strona głowna</a>
-    </span>
-    <span>
+    <span *ngIf="authService.currentUser$ | async">
         <a mat-button routerLink="tasks">
             <mat-icon>task</mat-icon>Zadania</a>
     </span>
